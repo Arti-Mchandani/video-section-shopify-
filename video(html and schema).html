@@ -1,0 +1,94 @@
+<div class="custoim_vedio conatiner">
+
+  {% if section.settings.video_url != blank %}
+  {%- if section.settings.video_url.type == 'youtube' -%}
+  <div class="custom_youtube" width="{{ section.settings.video_width }}" height="{{ section.settings.video_height  }}">
+    <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1" 
+        class="js-youtube"
+        loop playsinline allowfullscreen 
+        title="{{ section.settings.description | escape }}">
+    </iframe>
+
+    {%- else -%}
+    <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}" 
+      class="js-vimeo"
+      allow="autoplay; encrypted-media" allowfullscreen 
+      title="{{ section.settings.description | escape }}">
+    </iframe>
+  </div>
+  {%- endif -%}
+  {% else %}
+  <div class="custom_filesCdn" width="{{ section.settings.video_width }}" height="{{ section.settings.video_height }}">
+    <video 
+      {% if section.settings.autoplay %} autoplay muted {% endif %} 
+      {% if section.settings.show_controls %} controls {% endif %}loop playsinline>
+      <source src="{{ section.settings.video_file_url }}" type="video/mp4">
+    </video>
+    {% endif %}
+  </div>
+</div>
+
+
+
+<!-- schema setting -->
+
+
+      "type": "video",
+      "name": "Video",
+      "settings": [
+  {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+      "label": "vedio link",   
+      "info": "Video links from YouTube, Vimeo or MP4 file link. And vedio play on same page"
+    },
+         {
+            "type": "header",
+            "content": "Keep the Youtube link blank"
+          },
+       {
+      "type": "url",
+      "id": "video_file_url",
+      "label": "Vedio link from the files",
+      "info": "Link to your video file uploaded to shopify or some other CDN."
+  },
+       {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay If No Sound"
+   },
+       {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show Controls"
+    },
+ {
+          "type": "range",
+          "id": "video_width",
+          "label": "video width",
+          
+          "min": 200,
+          "max": 700,
+          "step": 50,
+          "unit": "px",
+          "default":300
+        },
+         {
+          "type": "range",
+          "id": "video_height",
+          "label": "video height",
+         
+          "min": 200,
+          "max": 700,
+          "step": 50,
+          "unit": "px",
+          "default":300
+        }
+
+      ]
+    },
